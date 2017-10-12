@@ -30,14 +30,18 @@
 						},function(){})
 					},
 					changeDown:function(){
-						this.thisIndex++;
-						if(this.thisIndex==this.searchData.length)this.thisIndex=0;
-						this.inputData=this.searchData[this.thisIndex]
+						if(this.searchData!=''){
+							this.thisIndex++;
+							if(this.thisIndex==this.searchData.length)this.thisIndex=0;
+							this.inputData=this.searchData[this.thisIndex]
+						}
 					},
 					changeUp:function(){
-						this.thisIndex--;
-						if(this.thisIndex==-1 || this.thisIndex==-2)this.thisIndex=this.searchData.length-1;
-						this.inputData=this.searchData[this.thisIndex]
+						if(this.searchData!=''){
+							this.thisIndex--;
+							if(this.thisIndex==-1 || this.thisIndex==-2)this.thisIndex=this.searchData.length-1;
+							this.inputData=this.searchData[this.thisIndex]
+						}
 					},
 					enterSearch:function(){
 						if(this.inputData!=''){
@@ -73,6 +77,7 @@
 		input[type="button"]:hover{background:#1963d2;}
 		.ulBorder{border:1px solid #d8d1d1;border-top:none;width:649px;}
 		.changeBGColor{background: #eae7e7;}
+		[v-cloak]{display:none;}
 	</style>
 </head>
 <body>
@@ -81,7 +86,7 @@
 		<input type="text" v-model="inputData" @keyup="get($event)" @keydown.down.prevent="changeDown()" @keydown.up.prevent="changeUp()">
 		<input type="button" value="百度一下" @click="enterSearch()">
 		<ul :class="{ulBorder:searchData.length!=0}" @mouseover="removeClassName()">
-			<li v-for="(value,index) in searchData" :class="{changeBGColor:index==thisIndex}" @click="clickSearch($event)" v-text="value"></li>
+			<li v-for="(value,index) in searchData" :class="{changeBGColor:index==thisIndex}" @click="clickSearch($event)" v-cloak>{{value}}</li>
 		</ul>
 	</div>
 </body>
